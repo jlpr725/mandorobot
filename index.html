@@ -130,6 +130,35 @@
     transform:translateY(140%); transition:transform .25s ease; z-index:20;
   }
   #toast.show{ transform:translateY(0); }
+
+  #rightPanel{ display:contents; }
+
+  /* ---------- Horizontal / landscape ---------- */
+  @media (orientation:landscape){
+    body{ padding-top:max(8px, env(safe-area-inset-top)); padding-bottom:max(8px, env(safe-area-inset-bottom)); }
+    header{ padding-bottom:8px; }
+    .brand .title{ font-size:13px; }
+    .brand .sub{ display:none; }
+    #telemetry{ padding:4px 2px 0; }
+    footer{ display:none; }
+
+    main{
+      flex-direction:row;
+      align-items:center;
+      justify-content:center;
+      gap:6vw;
+      padding:0;
+    }
+    #stickWrap{ width:min(52vh, 42vw, 260px); height:min(52vh, 42vw, 260px); flex-shrink:0; }
+
+    #rightPanel{
+      display:flex; flex-direction:column; align-items:stretch;
+      gap:16px; width:min(38vw, 190px);
+    }
+    #auxRow{ flex-direction:column; width:auto; gap:12px; }
+    .auxBtn{ flex:none; }
+    #padStatus{ justify-content:flex-start; padding-top:0; }
+  }
 </style>
 </head>
 <body>
@@ -161,20 +190,22 @@
     <div id="stickKnob"></div>
   </div>
 
-  <div id="auxRow">
-    <div class="auxBtn" id="aux1">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c8d8e" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
-      <span class="lbl">AUX 1</span>
-      <span class="key">A · CHECK</span>
+  <div id="rightPanel">
+    <div id="auxRow">
+      <div class="auxBtn" id="aux1">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c8d8e" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+        <span class="lbl">AUX 1</span>
+        <span class="key">A · CHECK</span>
+      </div>
+      <div class="auxBtn" id="aux2">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c8d8e" stroke-width="2"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.5 6.6 21 8 14.4 3 10l6.4-1.4z"/></svg>
+        <span class="lbl">AUX 2</span>
+        <span class="key">B · ESTRELLA</span>
+      </div>
     </div>
-    <div class="auxBtn" id="aux2">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#7c8d8e" stroke-width="2"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.5 6.6 21 8 14.4 3 10l6.4-1.4z"/></svg>
-      <span class="lbl">AUX 2</span>
-      <span class="key">B · ESTRELLA</span>
-    </div>
-  </div>
 
-  <div id="padStatus"><span class="dot"></span><span id="padLabel">SIN MANDO USB-C</span></div>
+    <div id="padStatus"><span class="dot"></span><span id="padLabel">SIN MANDO USB-C</span></div>
+  </div>
 </main>
 
 <footer>FLECHAS = TECLADO &nbsp;·&nbsp; STICK IZQ DEL MANDO = MOVIMIENTO</footer>
