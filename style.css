@@ -1,0 +1,173 @@
+  :root{
+    --bg:#12181a;
+    --panel:#1b2426;
+    --panel-2:#212c2e;
+    --line:#2c393c;
+    --accent:#ff8c1a;
+    --accent-dim:#7a4b1a;
+    --ok:#3ddc97;
+    --danger:#ff4d4d;
+    --text:#e8ecec;
+    --muted:#7c8d8e;
+    --mono: "JetBrains Mono","Space Mono",ui-monospace,Consolas,monospace;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{
+    margin:0; padding:0; height:100%; background:var(--bg); color:var(--text);
+    font-family:var(--sans); overscroll-behavior:none; touch-action:none;
+  }
+  body{
+    display:flex; flex-direction:column;
+    min-height:100vh; min-height:100dvh;
+    padding: max(14px, env(safe-area-inset-top)) 16px max(14px, env(safe-area-inset-bottom));
+  }
+
+  /* ---------- Top bar ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:12px; border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; flex-direction:column; line-height:1.05;}
+  .brand .title{font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:3px; color:var(--text);}
+  .brand .sub{font-family:var(--mono); font-size:10px; letter-spacing:2px; color:var(--muted); margin-top:3px;}
+
+  #connectBtn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--panel); border:1px solid var(--line); color:var(--text);
+    font-family:var(--mono); font-size:11px; letter-spacing:1.5px;
+    padding:9px 14px; border-radius:8px; cursor:pointer;
+  }
+  #connectBtn .dot{width:8px; height:8px; border-radius:50%; background:var(--danger); box-shadow:0 0 8px var(--danger);}
+  #connectBtn.connected .dot{background:var(--ok); box-shadow:0 0 8px var(--ok);}
+  #connectBtn.connected{border-color: rgba(61,220,151,.4);}
+
+  /* ---------- Telemetry strip ---------- */
+  #telemetry{
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    padding:8px 2px 2px; letter-spacing:.5px; display:flex; justify-content:space-between;
+  }
+  #telemetry .val{color:var(--accent);}
+
+  main{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+    padding: 10px 0 4px;
+  }
+
+  /* ---------- Joystick (compass dial) ---------- */
+  #stickWrap{ position:relative; width:min(72vw, 300px); height:min(72vw, 300px); }
+  svg#dial{ position:absolute; inset:0; width:100%; height:100%; }
+  .tick{ stroke:var(--line); stroke-width:2; }
+  .tick.major{ stroke:var(--muted); }
+  .dial-ring{ fill:none; stroke:var(--line); stroke-width:1.5; }
+  .dial-label{
+    font-family:var(--mono); font-size:11px; fill:var(--muted); letter-spacing:2px;
+  }
+  .dial-label.active{ fill:var(--accent); }
+
+  #stickBase{
+    position:absolute; inset:0; border-radius:50%;
+    background: radial-gradient(circle at 50% 42%, var(--panel-2), var(--panel) 70%);
+    border:1px solid var(--line);
+  }
+  #stickSweep{
+    position:absolute; inset:0; border-radius:50%; pointer-events:none;
+    opacity:0; transition:opacity .3s;
+  }
+  #stickWrap.live #stickSweep{ opacity:1; }
+  #stickKnob{
+    position:absolute; width:34%; height:34%; left:33%; top:33%;
+    border-radius:50%;
+    background: linear-gradient(160deg, #2e3a3c, #17201f);
+    border:1px solid var(--line);
+    box-shadow: 0 6px 14px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.02);
+    transition: box-shadow .15s;
+  }
+  #stickWrap.active #stickKnob{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,140,26,.12), 0 6px 14px rgba(0,0,0,.4);
+  }
+
+  /* ---------- Aux buttons ---------- */
+  #auxRow{ display:flex; gap:16px; width:min(72vw,300px); }
+  .auxBtn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:14px 8px; cursor:pointer;
+  }
+  .auxBtn:active{ border-color:var(--accent); }
+  .auxBtn .ico{ width:26px; height:26px; }
+  .auxBtn .lbl{ font-family:var(--mono); font-size:10px; letter-spacing:1.5px; color:var(--muted); }
+  .auxBtn .key{ font-family:var(--mono); font-size:9px; color:var(--accent-dim); }
+
+  /* ---------- Gamepad status ---------- */
+  #padStatus{
+    display:flex; align-items:center; gap:8px; justify-content:center;
+    font-family:var(--mono); font-size:10.5px; color:var(--muted); letter-spacing:1px;
+    padding-top:2px;
+  }
+  #padStatus .dot{width:7px; height:7px; border-radius:50%; background:var(--line);}
+  #padStatus.on .dot{background:var(--ok); box-shadow:0 0 6px var(--ok);}
+  #padStatus.on{ color:var(--ok); }
+
+  footer{
+    font-family:var(--mono); font-size:9.5px; color:var(--muted); text-align:center;
+    padding-top:10px; letter-spacing:1px; opacity:.7;
+  }
+
+  #toast{
+    position:fixed; left:16px; right:16px; bottom:24px;
+    background:#241414; border:1px solid var(--danger); color:#ffb3b3;
+    font-family:var(--mono); font-size:12px; padding:10px 14px; border-radius:8px;
+    transform:translateY(140%); transition:transform .25s ease; z-index:20;
+  }
+  #toast.show{ transform:translateY(0); }
+
+  #rightPanel{ display:contents; }
+
+  /* ---------- Horizontal / landscape ---------- */
+  @media (orientation:landscape){
+    body{ padding-top:max(8px, env(safe-area-inset-top)); padding-bottom:max(8px, env(safe-area-inset-bottom)); }
+    header{ padding-bottom:8px; }
+    .brand .title{ font-size:13px; }
+    .brand .sub{ display:none; }
+    #telemetry{ padding:4px 2px 0; }
+    footer{ display:none; }
+
+    main{
+      flex-direction:row;
+      align-items:center;
+      justify-content:center;
+      gap:6vw;
+      padding:0;
+    }
+    #stickWrap{ width:min(52vh, 42vw, 260px); height:min(52vh, 42vw, 260px); flex-shrink:0; }
+
+    #rightPanel{
+      display:flex; flex-direction:column; align-items:stretch;
+      gap:16px; width:min(38vw, 190px);
+    }
+    #auxRow{ flex-direction:column; width:auto; gap:12px; }
+    .auxBtn{ flex:none; }
+    #padStatus{ justify-content:flex-start; padding-top:0; }
+  }
+
+/* ---------- Debug panel ---------- */
+#debugPanel{
+  position:fixed; left:8px; right:8px; bottom:8px; z-index:30;
+  background:rgba(18,24,26,.95); border:1px solid var(--line); border-radius:10px;
+  font-family:var(--mono); font-size:10.5px; max-height:40vh; display:flex; flex-direction:column;
+  backdrop-filter: blur(4px);
+}
+#debugHeader{
+  display:flex; justify-content:space-between; padding:7px 10px;
+  color:var(--muted); letter-spacing:2px; cursor:pointer; border-bottom:1px solid var(--line);
+}
+#debugLog{
+  overflow-y:auto; padding:6px 10px 8px; color:#9fb0b1; line-height:1.5;
+}
+#debugLog div{ border-bottom:1px dashed rgba(255,255,255,.05); padding:2px 0; word-break:break-word; }
+#debugLog .err{ color:var(--danger); }
+#debugLog .ok{ color:var(--ok); }
+#debugPanel.collapsed #debugLog{ display:none; }
+#debugPanel.collapsed #debugToggle{ transform:rotate(-90deg); }
