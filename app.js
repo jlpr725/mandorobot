@@ -106,7 +106,11 @@ const writeQueue = [];
 async function sendCommand(cmd, source){
   lastCmdEl.textContent = cmd;
   lastSourceEl.textContent = source;
-  if(!isConnected || !rxChar) return;
+  if(!isConnected || !rxChar){
+    log('Comando "' + cmd + '" generado (' + source + ') pero no hay conexión activa.', 'err');
+    return;
+  }
+  log('Encolando comando: ' + cmd + ' (origen: ' + source + ')');
   writeQueue.push(cmd);
   if(writeBusy) return;
   writeBusy = true;
@@ -114,7 +118,12 @@ async function sendCommand(cmd, source){
     const c = writeQueue.shift();
     try{
       const data = new TextEncoder().encode(c + '\n');
-      await rxChar.writeValueWithoutResponse ? rxChar.writeValueWithoutResponse(data) : rxChar.writeValue(data);
+      if(rxChar.writeValueWithoutResponse){
+        await rxChar.writeValueWithoutResponse(data);
+      }else{
+        await rxChar.writeValue(data);
+      }
+      log('Comando enviado: ' + c, 'ok');
     }catch(e){
       console.warn('Fallo de escritura BLE', e);
       log('Fallo al escribir comando "' + c + '": ' + (e.message || e), 'err');
