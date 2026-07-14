@@ -332,3 +332,12 @@ function triggerAux(n){
 }
 document.getElementById('aux1').addEventListener('click', ()=> triggerAux(1));
 document.getElementById('aux2').addEventListener('click', ()=> triggerAux(2));
+
+// ============================================================
+// PWA: registro del service worker (necesario para poder instalarla)
+// ============================================================
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch((e) => console.warn('SW no registrado:', e));
+  });
+}
